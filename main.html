@@ -1,8 +1,47 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <script type="text/javascript" src="./script.js">
-</script>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharable URL Generator</title>
+    <script>
+        function updateURL() {
+            const name = document.getElementById('name').value;
+            const year = document.getElementById('year').value;
+            let baseURL = "https://localhost:8080/";
+            let queryString = "?";
 
+            // Append name and year to the query string if they have values
+            if (name) {
+                queryString += `name=${encodeURIComponent(name)}`;
+            }
+            if (year) {
+                if (queryString.length > 1) {
+                    queryString += "&";
+                }
+                queryString += `year=${encodeURIComponent(year)}`;
+            }
+
+            // Update the URL in the h3 element
+            document.getElementById('url').textContent = baseURL + (queryString !== "?" ? queryString : "");
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Generate a Shareable URL</h2>
+
+    <form onsubmit="event.preventDefault(); updateURL();">
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name" placeholder="Enter name"><br><br>
+
+        <label for="year">Year: </label>
+        <input type="number" id="year" name="year" placeholder="Enter year"><br><br>
+
+        <button type="submit" id="button">Submit</button>
+    </form>
+
+    <h3 id="url">https://localhost:8080/</h3>
+
+</body>
 </html>
